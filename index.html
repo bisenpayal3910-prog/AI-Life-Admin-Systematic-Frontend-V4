@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Life Admin — professional personal and client life management workspace.">
+  <title>AI Life Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- LOGIN / SIGNUP -->
+  <section id="authScreen" class="auth-screen">
+    <div class="auth-visual">
+      <div class="brand brand-light"><span class="brand-mark">✦</span><div><strong>AI Life Admin</strong><small>Executive life management</small></div></div>
+      <div class="auth-copy">
+        <span class="eyebrow">One intelligent workspace</span>
+        <h1>Organize your life.<br><em>Own your time.</em></h1>
+        <p>Tasks, clients, routines, finance, health, documents and AI assistance — designed as one professional command center.</p>
+        <div class="auth-highlights">
+          <span>✓ Personal workspace</span><span>✓ Client task management</span><span>✓ Finance & habits</span>
+        </div>
+      </div>
+    </div>
+    <div class="auth-panel">
+      <div class="auth-card">
+        <div class="auth-mobile-brand"><span class="brand-mark">✦</span> AI Life Admin</div>
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-auth="login">Login</button>
+          <button class="auth-tab" data-auth="signup">Create account</button>
+        </div>
+        <div id="loginForm">
+          <div class="eyebrow">Welcome back</div>
+          <h2>Sign in to your workspace</h2>
+          <p class="auth-muted">Your dashboard is private to your account.</p>
+          <form onsubmit="login(event)">
+            <label>Email<input id="loginEmail" type="email" placeholder="you@example.com" required></label>
+            <label>Password<input id="loginPassword" type="password" placeholder="••••••••" required></label>
+            <button class="btn primary wide" type="submit">Sign in →</button>
+          </form>
+          <div class="demo-hint">Prototype mode: any valid email + 6 character password works. Backend authentication will replace this in the next phase.</div>
+        </div>
+        <div id="signupForm" class="hidden">
+          <div class="eyebrow">Get started</div>
+          <h2>Create your workspace</h2>
+          <p class="auth-muted">Start with a clean, empty workspace and add your own data.</p>
+          <form onsubmit="signup(event)">
+            <label>Full name<input id="signupName" placeholder="Your name" required></label>
+            <label>Email<input id="signupEmail" type="email" placeholder="you@example.com" required></label>
+            <label>Password<input id="signupPassword" type="password" placeholder="Minimum 6 characters" minlength="6" required></label>
+            <button class="btn primary wide" type="submit">Create account →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLICATION -->
+  <section id="appScreen" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <span class="brand-mark">✦</span>
+        <div><strong>AI Life Admin</strong><small>Executive workspace</small></div>
+      </div>
+
+      <nav class="nav">
+        <p class="nav-label">Workspace</p>
+        <a class="nav-link active" href="#dashboard" data-view="dashboard"><span>⌂</span> Dashboard</a>
+        <a class="nav-link" href="#assistant" data-view="assistant"><span>✦</span> AI Assistant</a>
+        <a class="nav-link" href="#tasks" data-view="tasks"><span>✓</span> Tasks <b id="taskBadge">0</b></a>
+        <a class="nav-link" href="#calendar" data-view="calendar"><span>▣</span> Calendar</a>
+        <a class="nav-link" href="#notes" data-view="notes"><span>▤</span> Notes</a>
+        <a class="nav-link" href="#goals" data-view="goals"><span>◎</span> Goals</a>
+        <a class="nav-link" href="#routine" data-view="routine"><span>↻</span> Routine & Habits</a>
+
+        <p class="nav-label">Life & Money</p>
+        <a class="nav-link" href="#health" data-view="health"><span>♡</span> Health</a>
+        <a class="nav-link" href="#finance" data-view="finance"><span>₹</span> Finance & Expenses</a>
+        <a class="nav-link" href="#bills" data-view="bills"><span>▣</span> Bills & Payments</a>
+        <a class="nav-link" href="#documents" data-view="documents"><span>▧</span> Documents</a>
+
+        <p class="nav-label">Insights</p>
+        <a class="nav-link" href="#analytics" data-view="analytics"><span>▥</span> Analytics</a>
+        <a class="nav-link" href="#settings" data-view="settings"><span>⚙</span> Settings</a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-card"><span>✦</span><div><strong>AI ready</strong><small>Backend + AI can be connected next.</small></div></div>
+        <button class="profile-mini" onclick="showView('settings')">
+          <span class="avatar" id="profileAvatar">U</span><span class="profile-copy"><strong id="profileName">User</strong><small>Personal workspace</small></span><span>•••</span>
+        </button>
+        <button class="logout-btn" onclick="logout()">↪ Log out</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="pageTitle">Dashboard</strong></div>
+        <div class="top-actions">
+          <button class="icon-btn" onclick="openSearch()" title="Search">⌕</button>
+          <button class="icon-btn" onclick="notify('No new notifications')" title="Notifications">♧</button>
+          <button class="user-pill" onclick="showView('settings')"><span class="avatar small" id="topAvatar">U</span><span id="topUserName">User</span></button>
+        </div>
+      </header>
+      <section class="content" id="appContent"></section>
+    </main>
+  </section>
+
+  <div class="modal-backdrop" id="modalBackdrop"><div class="modal" id="modal"></div></div>
+  <div class="toast" id="toast"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
